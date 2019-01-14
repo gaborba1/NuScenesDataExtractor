@@ -2,6 +2,7 @@
 Data extractor class for extracting data from nuScenes dataset
 
 ### Run example
+Specify nuScenes ``python-sdk`` path in ``main.py`` and ``nusc_data_extractor.py``, then run:
 ```
 >>> python main.py
 ```
