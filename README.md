@@ -24,20 +24,26 @@ de_nusc.advance()
 ```
 
 #### Data extraction
+Extract data of the lidar sensor for current time step:
 ```
 lidar_points = de_nusc.get_lidar_pointcloud()
 ```
 
+Extract data of one radar sensor for current time step:
 ```
-radar_points, radar_velocities = de_nusc.get_radar_pointcloud()
+radar_channel = 'RADAR_FRONT'
+radar_points, radar_velocities = de_nusc.get_radar_pointcloud(radar_channel)
 ```
 
+Extract data of all radar sensors for current time step:
 ```
 radar_points, radar_velocities = de_nusc.get_all_radar_pointclouds()
 ```
 
+Extract raw image of one camera sensor for current time step:
 ```
-camera_image = de_nusc.get_camera_image()
+camera_channel = 'CAM_FRONT'
+camera_image = de_nusc.get_camera_image(camera_channel)
 ```
 
 Get annotations for all possible annotations. If a sensor channel (e.g. ``'RADAR_FRONT'``) is specified, just the annotations seen by the sensor are given.
