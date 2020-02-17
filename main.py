@@ -5,7 +5,7 @@ import sys
 sys.path.append(NUSCENES_SDK_PATH)
 import numpy as np
 
-from nuscenes_utils.nuscenes import NuScenes
+from nuscenes.nuscenes import NuScenes
 from nusc_data_extractor import NuScenesDataExtractor
 
 """ Start """
