@@ -8,10 +8,10 @@ import numpy as np
 from PIL import Image
 from pyquaternion import Quaternion
 
-from nuscenes_utils.nuscenes import NuScenes
-from nuscenes_utils.map_mask import MapMask
-from nuscenes_utils.data_classes import LidarPointCloud, RadarPointCloud, Box
-from nuscenes_utils.geometry_utils import view_points, box_in_image, quaternion_slerp, BoxVisibility
+from nuscenes.nuscenes import NuScenes
+from nuscenes.utils.map_mask import MapMask
+from nuscenes.utils.data_classes import LidarPointCloud, RadarPointCloud, Box
+from nuscenes.utils.geometry_utils  import view_points, box_in_image, BoxVisibility
 
 class NuScenesDataExtractor:
     """ Helper class to extract raw data from the database """
