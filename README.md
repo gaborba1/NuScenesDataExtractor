@@ -69,3 +69,4 @@ It is possible to save the current LiDAR point cloud into an image of a fixed ma
 #Save the image with the LiDAR points, the maximum axis value and the name used to save the file. The labels will also be saved
 de_nusc.save_figure_and_labels("LIDAR_TOP", 40, "image0000")
 ```
+Use the code "labelme2coco" from: https://github.com/Tony607/labelme2coco/blob/master/labelme2coco.py to get COCO structure for the labels.
