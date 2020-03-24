@@ -26,8 +26,6 @@ class NuScenesDataExtractor:
         self.camera_sensor_channels = ['CAM_FRONT', 'CAM_FRONT_LEFT', 'CAM_FRONT_RIGHT', 'CAM_BACK_LEFT', 'CAM_BACK_RIGHT', 'CAM_BACK']
         print(" [*] NuScenesDataExtractor initiated.")
 
-
-
     def set_scene(self, scene):
         """
         Selecting a scene
@@ -43,8 +41,6 @@ class NuScenesDataExtractor:
         print(" [*] Scene set to " + self.scene_name)
         print(" [*] Timestep 0")
 
-
-
     def advance(self, n=1):
         """ 
         Advances one time step in the scene.
@@ -54,19 +50,16 @@ class NuScenesDataExtractor:
         if not hasattr(self, 'sample'):
             print(" [!] Can't advance, if no scene was selected before.")
             return
-
         try:
             self.sample = self.nusc.get('sample', self.sample['next'])
             self.sample_token = self.sample['token']
             self.timestep = self.timestep + 1
             print(" [*] Timestep " + str(self.timestep))
-
             return True
 
         except:
             return False
             pass
-
 
     def get_camera_image(self, channel='CAM_FRONT'):
         """ 
@@ -104,8 +97,6 @@ class NuScenesDataExtractor:
         chan = sd_record['channel']
         pc, times = LidarPointCloud.from_file_multisweep(self.nusc, self.sample, chan, channel, nsweeps=1)
 
-
-
         #calibration of LiDAR points
         ref_sd_record = self.nusc.get('sample_data', sample_data_token)
         cs_record = self.nusc.get('calibrated_sensor', ref_sd_record['calibrated_sensor_token'])
@@ -141,11 +132,8 @@ class NuScenesDataExtractor:
             points = [points, p]
             points_vel = [points_vel, v]
 
-
         print(" [*] All radar point clouds extracted.")
         return points, points_vel
-
-
 
     def get_radar_pointcloud(self, channel='RADAR_FRONT'):
         """ 
@@ -235,6 +223,10 @@ class NuScenesDataExtractor:
         return bboxes, class_ID, velocity_list
 
     def save_figure_and_labels(self, channel, axes_limit: float = 40, save_name: str = "defaut_name"):
+         '''
+        Save the figure with the LiDAR points and the labels in separated files (image for LiDAR and .txt for labels)
+        Author: Javier
+        '''
         point_scale = 0.2 if channel == 'LIDAR_TOP' else 3.0
 
         #check if we colleted the lidar points, if not collect them now
@@ -308,8 +300,11 @@ class NuScenesDataExtractor:
                 f.write("%s" % item)
             f.close()
 
-
     def check_corners_in_range(self, corners, x_lim, y_lim):
+        '''
+        Check if the corners of the labels are inside the limits for the axis
+        Author: Javier
+        '''
         if corners.max()< x_lim and corners.min()> (-1*x_lim):
             valid = True
         else:
@@ -318,6 +313,10 @@ class NuScenesDataExtractor:
         return valid
 
     def get_scene_list(self):
+        '''
+        Return the scene list in the database
+        Author: Javier
+        '''
         scene_names = []
         scene_list = self.nusc.scene
         for scene in scene_list:
@@ -343,12 +342,11 @@ def draw2DBboxes(corners):
     :param corners:
     :return:
     '''
-
     for i in range(0, len(corners)):
         draw_rect(corners[i].T[:4])
 
 def draw3DBboxes(corners):
-    # Draw the sides
+    # Draw the sides of the bboxes in 3D
     for i in range(4):
         plt.plot([corners.T[i][0], corners.T[i + 4][0]],
                   [corners.T[i][1], corners.T[i + 4][1]],
@@ -357,5 +355,3 @@ def draw3DBboxes(corners):
     # Draw front and back face of the 3D bbox
     draw_rect(corners.T[:4], (0,0,0))
     draw_rect(corners.T[4:], (0,0,0))
-
-
