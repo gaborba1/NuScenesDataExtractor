@@ -1,3 +1,7 @@
+'''
+Code created by Javier Mendez Gomez
+'''
+
 import numpy as np
 import io
 import json
