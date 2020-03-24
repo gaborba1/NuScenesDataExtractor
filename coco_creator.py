@@ -91,9 +91,3 @@ def create_COCO_individual_labels(boxes, categories, imagePath, height, width):
     label = label + '}'
 
     return label
-
-
-
-
-
-
